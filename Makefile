@@ -1,5 +1,5 @@
 run: compile
-	./main.byte
+	eval `opam config env` && ./main.byte
 
 test: compile
 	# ________________________________
@@ -11,6 +11,7 @@ test: compile
 	rm -rd test_build
 
 compile:
+	eval `opam config env` && \
 	ocamlbuild -pkgs oUnit,yojson,str,lambda-term \
 		main.byte test.byte \
 
@@ -26,7 +27,7 @@ install-ubuntu:
 	apt-get update
 	apt-get install ocaml ocaml-native-compilers camlp4-extra opam
 	opam init -a --comp 4.03.0
-	opam swtich -- 4.03.0
+	opam switch -- 4.03.0
 	eval `opam config env`
 	opam install utop yojson lambda-term oUnit
 
